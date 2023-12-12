@@ -20,22 +20,25 @@ void limpatela(){
   system("cls || clear");
 }
 
-// Função para buscar o número de telefone pelo nome
-char* buscarTelefonePorNome(struct dadosDoContato contatos[], int tamanho, char nome[]) {
-	int i;
-	
-    for ( i = 0; i < TAM; i++) {
-        if (strcmp(contatos[i].nome, nome) == 0) {
-         break;
+char* buscarTelefonePorNome(struct dadosDoContato contatos[],char* contatoDesejado)
+{
+    int i;
+    for (i = 0; i < TAM; i++)
+    {
+        if (strcmp(contatos[i].nome, contatoDesejado) == 0)
+        {
+            printf("Número respectivo: %s",contatos[i].telefone);
+            break;
         }
     }
-    return "Contato não encontrado";
+    printf("\nContato não encontrado");
 }
 
 int main() {
     //Declarando Variaveis
     struct dadosDoContato contatos[TAM];
     int i;
+    char contatoDesejado[200];
     
     for ( i = 0; i < TAM; i++) {
         printf("%dº Contato:\n", i + 1);
@@ -49,13 +52,10 @@ int main() {
 
     limpatela();
 
-    // Busca e impressão do número de telefone de um contato específico
-    char nomeBusca[250];
-    printf("Digite o nome do contato para buscar o número de telefone: ");
-    scanf("%s", nomeBusca);
+    printf("Digite um nome para busca: ");
+    gets(contatoDesejado);
 
-    char* telefoneEncontrado = buscarTelefonePorNome(contatos, 3, nomeBusca);
-    printf("O número de telefone de %s é: %s\n", nomeBusca, telefoneEncontrado);
+    buscarTelefonePorNome(contatos,contatoDesejado);
 
     return 0;
 }
