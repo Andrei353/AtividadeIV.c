@@ -4,11 +4,11 @@
 #include <string.h>
 #include <time.h>
 
-// Declarando fun��es
+// Declarando funções
 
 struct ContaBancaria
 {
-    int numeroConta;
+    char numeroConta[250];
     char nomeTitular[250];
     float saldo;
     char tipoConta[250];
@@ -33,7 +33,8 @@ void sacar(struct ContaBancaria *conta, float valor)
     }
 }
 
-void imprimirSaldo(struct ContaBancaria conta) {
+void imprimirSaldo(struct ContaBancaria conta)
+{
     printf("Saldo atual: R$%.2f\n", conta.saldo);
 }
 
@@ -43,36 +44,53 @@ int main()
     // Declarando Variaveis
 
     struct ContaBancaria contas;
-     int opcao;
+    int opcao;
     float valor;
 
     do
     {
-    	printf("--------Bem-vindo--------");
+        printf("--------Bem-vindo--------");
         printf("\nEscolha uma operacao:\n");
-        printf("1 - Depositar dinheiro\n");
-        printf("2 - Sacar dinheiro\n");
-        printf("3 - Imprimir saldo\n");
-        printf("4 - Sair do programa\n");
+        printf("1 - Registrar Conta\n");
+        printf("2 - Depositar dinheiro\n");
+        printf("3 - Sacar dinheiro\n");
+        printf("4 - Imprimir saldo\n");
+        printf("5 - Sair do programa\n");
         printf("\nDigite sua Escolha:");
         scanf("%d", &opcao);
 
         switch (opcao)
         {
         case 1:
+            fflush(stdin);
+
+            printf("Nome do titular: ");
+            gets(contas.nomeTitular);
+
+            printf("Número da conta: ");
+            gets(contas.numeroConta);
+
+            printf("Tipo de conta desejada: ");
+            gets(contas.tipoConta);
+
+            printf("Qual saldo terá na conta: ");
+            scanf("%f", &contas.saldo);
+
+            break;
+        case 2:
             printf("Digite o valor a ser depositado: ");
             scanf("%f", &valor);
             depositar(&contas, valor);
             break;
-        case 2:
+        case 3:
             printf("Digite o valor a ser sacado: ");
             scanf("%f", &valor);
             sacar(&contas, valor);
             break;
-        case 3:
+        case 4:
             imprimirSaldo(contas);
             break;
-        case 4:
+        case 5:
             printf("Saindo da sua Conta Bancaria.\n");
             break;
         default:
