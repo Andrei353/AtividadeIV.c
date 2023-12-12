@@ -4,85 +4,75 @@
 #include <string.h>
 #include <time.h>
 
-#define t 2
-#define g 5
+#define TAM 5
 
-// Declarando Funções e Struct
-struct dados_aluno
+struct Alunos
 {
     char nome[200];
-    char dataDeNascimento;
-    float notas[t];
+    char dataDeNascimento[11];
 };
 
-void limpatela()
+float calcularMedia(float nota[])
 {
-    fflush(stdin);
-    system("cls || clear");
-}
-
-float mediaTotal(float numero[])
-{
-    float soma = 0;
     int i;
-
-    for (i = 0; i < t; i++)
+    float soma, media;
+    for (i = 0; i < 2; i++)
     {
-        soma += numero[i];
+        soma += nota[i];
     }
 
-    return soma / t;
+    return media = soma / 2;
 }
 
 char *situacao(float media)
 {
-    char resultado[250];
-    media >= 7 ? strcpy(resultado, "Aprovado") : strcpy(resultado, "Reprovado");
-    return resultado;
+    char situacao[200];
+
+    if (media > 7)
+    {
+        strcpy(situacao, "Aprovado");
+    }
+    else
+    {
+        strcpy(situacao, "Reprovado");
+    }
+
+    return situacao;
+}
+
+void limpatela(){
+  fflush(stdin);
+  system("cls || clear");
 }
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
-    // Declarando Variaveis
+    float nota[2], mediaTotal;
     int i, j;
-    float media;
-    struct dados_aluno aluno[g];
 
-    // Solicitando Dados
+    struct Alunos alunos[TAM];
 
-    for (j = 0; j < g; j++)
+    for (i = 0; i < TAM; i++)
     {
-        printf("\nDigite o nome do Aluno: ");
-        gets(aluno[j].nome);
-        printf("\nDigite a Data de Nascimento: ");
-        gets(aluno[j].dataDeNascimento);
-        for (i = 0; i < t; i++)
+        printf("\nDigite o seu nome: ");
+        gets(alunos[i].nome);
+
+        printf("\nDigite a sua data de nascimento: ");
+        gets(alunos[i].dataDeNascimento);
+
+        for (j = 0; j < 2; j++)
         {
-            printf("\n Digite a %iº Nota: ", i + 1);
-            scanf("%f", &aluno[j].notas[i]);
+            printf("\nSua %dÂª nota: ", i + 1);
+            scanf("%f", &nota[j]);
         }
 
-    }
+         limpatela();
 
-    limpatela();
-
-    // Resultados
-    media = mediaTotal(aluno->notas);
-
-    for (j = 0; j < g; j++)
-    {
-
-        printf("Nome: %s \n", aluno[j].nome);
-        printf("Data de Nascimento: %i \n", aluno[j].dataDeNascimento);
-
-        for (i = 0; i < t; i++)
+        mediaTotal = calcularMedia(nota);
+        for ( i = 0; i < TAM; i++)
         {
-            printf("Notas: %f \n", aluno[j].notas[i]);
+            printf("Aluno: %s, MÃ©dia: %.2f, SituaÃ§Ã£o: %s\n", alunos[i].nome, mediaTotal, situacao(mediaTotal) ? "Aprovado" : "Reprovado");
         }
-
-        printf("Media: %f \n", media);
-        printf("Situação: %s \n", situacao(media));
     }
 
     return 0;
