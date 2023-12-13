@@ -1,92 +1,77 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
 #include <string.h>
-#include <time.h>
+#include <locale.h>
 
-#define TAM 4
+#define TAM 200
 
-// Declarando funções
-struct Funcionirios
+struct dadosDoFuncionario
 {
-    char nome[250];
-    char cargo[250];
+    char nome[250], cargo[250];
     float salario;
 };
 
-float calcularMediaSalarial(struct Funcionirios funcionirios[], char cargoBuscado[])
+float mediaDoFuncionario(struct dadosDoFuncionario Funcionarios[])
 {
-	int i;
-    int contador = 0;
-    float somaSalarial = 0;
+    int i, j;
+    float soma, resultado;
 
-    for ( i = 0; i < TAM; i++)
+    for (j = 0; j < TAM; j++)
     {
-        if (strcmp(funcionirios[i].cargo, cargoBuscado) == 0)
+        if (strcmp(Funcionarios[i].cargo, "Desenvolvedor") == 0)
         {
-            somaSalarial += funcionirios[i].salario;
-            contador++;
+            j++;
+            soma += Funcionarios[i].salario;
         }
     }
-
-    if (contador == 0)
-    {
-        return 0;
-    }
-    else
-    {
-        return somaSalarial / contador;
-    }
+    resultado = soma / (float)j;
+    return resultado;
 }
 
-void limpatela()
-{
-    system("cls || clear");
-    printf("COREBRAS! Calculadora de Média Salárial\n\n");
+void limpatela(){
+  fflush(stdin);
+  system("cls || clear");
 }
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
-    // Declarando Variaveis
 
-    int opcao;
-    int i = 0;
-    struct Funcionirios funcionirio[TAM];
-
-    // Solicitindo dados
+    int opcao, i;
+    
+    struct dadosDoFuncionario funcionarios[TAM];
 
     do
     {
-        titulo();
-        printf("Código | Descrição\n");
-        printf("   1   | Adicionar informação\n");
-        printf("   2   | Sair e exibir\n\n");
-        printf("Sua Escolha: ");
+        printf("\n--------------Bem-Vindo--------------\n");
+        printf(" 1 - Adicionar InformaÃ§Ãµes do Funcionario\n");
+        printf(" 2 - Exibir InformaÃ§Ãµes do Funcionario\n");
+        printf(" 3 - Sair programa\n");
+        printf("\nSua Escolha: ");
         scanf("%d", &opcao);
 
         switch (opcao)
         {
         case 1:
-            setbuf(stdin, 0);
-            printf("\nDigite o nome do %dº funcionário: ", i + 1);
-            gets(funcionirio[i].nome);
+            fflush(stdin);
+
+            printf("Digite o nome do %dÂº funcionÃ¡rio: ", i + 1);
+            gets(funcionarios[i].nome);
+
             printf("Digite o nome do cargo: ");
-            gets(funcionirio[i].cargo);
+            gets(funcionarios[i].cargo);
+
             printf("Digite o valor do salario: ");
-            scanf("%f", &funcionirio[i].salario);
-            i++;
+            scanf("%f", &funcionarios[i].salario);
+
+            limpatela();
+
+            break;
+        case 2:
+            printf("MÃ©dia salarial: R$ %.2f\n", mediaDoFuncionario(funcionarios));
             break;
         }
 
-    } while (opcao != 2);
-
-    // Resultados
-
-    limpatela();
-    float mediaSalarialProgramadores = (calcularMediaSalarial);
-    printf("Média salarial dos programadores: R$ %.2f\n", mediaSalarialProgramadores);
+    } while (opcao != 3);
 
     return 0;
 }
-
